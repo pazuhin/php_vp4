@@ -33,13 +33,10 @@
                 @endforeach
             </div>
         </div>
+    </div>
         @endsection
 
 
-    </div>
-    <script src="js/main.js"></script>
-</body>
-</html>
 
 
 {{--<!doctype html>--}}

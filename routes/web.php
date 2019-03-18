@@ -38,18 +38,16 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 });
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/category/store', 'CategoryController@store')->name('category_store');
 Route::get('/category/{id}', 'Pagination@action')->name('category_action');
+Route::get('/home', 'Pagination@home')->name('home');
 //Route::get('/category/{id}', 'CategoryController@action')->name('category_action');
 
 Route::get('/category/{id}/{id_prod}', 'CategoryController@showOne')->name('show_one');
 Route::get('/product/{id}', 'ProductController@single')->name('product_single');
-//Route::get('/category/rpg', 'CategoryController@action')->name('category_rpg');
-//Route::get('/category/quests', 'CategoryController@action')->name('category_quests');
-//Route::get('/category/online', 'CategoryController@action')->name('category_online');
-//Route::get('/category/strategies', 'CategoryController@action')->name('category_strategies');
+Route::post('/product/save', 'ProductController@saveOrder')->name('order');
 
 Route::post('/product/store', 'ProductController@store')->name('product_store');
 Route::post('/product/edit/{category}', 'ProductController@edit')->name('product_edit');

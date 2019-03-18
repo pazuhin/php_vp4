@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Orders;
 use App\Products;
 use Illuminate\Http\Request;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 
 class ProductController extends Controller
 {
@@ -38,8 +42,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //$this->saveToUploads();
-
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
@@ -78,4 +80,31 @@ class ProductController extends Controller
             'product' => $product
         ]);
     }
+
+    public function saveOrder(Request $request)
+    {
+        $order = new Orders();
+        $order->buyer_name = $request->get('name');
+        $order->buyer_email = $request->get('email');
+        $order->product_id = $request->get('prod_id');
+        $order->save();
+
+        try {
+            $transport = (new Swift_SmtpTransport('smtp.mail.ru', 465, 'ssl'))
+                ->setUsername('achochiyev@mail.ru')
+                ->setPassword('qazwsxedc123');
+            $mailer = new Swift_Mailer($transport);
+            $message = new Swift_Message();
+            $message->setSubject('New order');
+            $message->setFrom(['achochiyev@mail.ru' => 'achochiyev']);
+            $message->setTo('andrew_1024@mail.ru');
+            $message->setBody('Поступил заказ от ' . $request->get('name') . '<br>' .
+            'email пользователя : ' . $request->get('email') . '<br>');
+            $mailer->send($message);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return redirect('/product/' . $request->get('prod_id'));
+    }
+
 }

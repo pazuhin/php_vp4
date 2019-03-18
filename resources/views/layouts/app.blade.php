@@ -26,30 +26,29 @@
 <body>
 <div id="app">
     <main class="py-4" style="padding-top: 0 !important">
-
         <div class="main-wrapper">
             <header class="main-header">
                 @if(Auth::user())
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 
                             {{ Auth::user()->name }} <span class="caret"></span>
 
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
                         </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
                 @endif
                 <div class="logotype-container"><a href="#" class="logotype-link"><img src="{{asset('img/logo.png')}}"
                                                                                        alt="Логотип"></a>
@@ -89,7 +88,9 @@
             </header>
             <div class="middle">
                 <div class="sidebar">
-                    @include('layouts.category')
+
+                        @include('layouts.category')
+
                     <div class="sidebar-item">
                         <div class="sidebar-item__title">Последние новости</div>
                         <div class="sidebar-item__content">
@@ -138,60 +139,59 @@
                     </div>
                     @yield('content')
                     <div class="content-footer__container">
-
                         @include('layouts.pagination')
-
                     </div>
                 </div>
                 <div class="content-bottom"></div>
             </div>
-        </div>
         <footer class="footer">
-            <div class="footer__footer-content">
-                <div class="random-product-container">
-                    <div class="random-product-container__head">Случайный товар</div>
-                    <div class="random-product-container__content">
-                        <div class="item-product">
-                            <div class="item-product__title-product"><a href="#"
-                                                                        class="item-product__title-product__link">The
-                                    Witcher 3: Wild Hunt</a></div>
-                            <div class="item-product__thumbnail"><a href="#" class="item-product__thumbnail__link"><img
-                                            src="{{asset('img/cover/game-1.jpg')}}" alt="Preview-image"
-                                            class="item-product__thumbnail__link__img"></a></div>
-                            <div class="item-product__description">
-                                <div class="item-product__description__products-price"><span
-                                            class="products-price">400 руб</span></div>
-                                <div class="item-product__description__btn-block"><a href="#"
-                                                                                     class="btn btn-blue">Купить</a>
+                <div class="footer__footer-content">
+                    <div class="random-product-container">
+                        <div class="random-product-container__head">Случайный товар</div>
+                        <div class="random-product-container__content">
+                            <div class="item-product">
+                                <div class="item-product__title-product"><a href="#"
+                                                                            class="item-product__title-product__link">The
+                                        Witcher 3: Wild Hunt</a></div>
+                                <div class="item-product__thumbnail"><a href="#" class="item-product__thumbnail__link"><img
+                                                src="{{asset('img/cover/game-1.jpg')}}" alt="Preview-image"
+                                                class="item-product__thumbnail__link__img"></a></div>
+                                <div class="item-product__description">
+                                    <div class="item-product__description__products-price"><span
+                                                class="products-price">400 руб</span></div>
+                                    <div class="item-product__description__btn-block"><a href="#"
+                                                                                         class="btn btn-blue">Купить</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="footer__footer-content__main-content">
+                        <p>
+                            Интернет-магазин компьютерных игр ГЕЙМСМАРКЕТ - это
+                            онлайн-магазин игр для геймеров, существующий на рынке уже 5 лет.
+                            У нас широкий спектр лицензионных игр на компьютер, ключей для игр - для активации
+                            и авторизации, а также карты оплаты (game-card, time-card, игровые валюты и т.д.),
+                            коды продления и многое друго. Также здесь всегда можно узнать последние новости
+                            из области онлайн-игр для PC. На сайте предоставлены самые востребованные и
+                            актуальные товары MMORPG, приобретение которых здесь максимально удобно и,
+                            что немаловажно, выгодно!
+                        </p>
+                    </div>
                 </div>
-                <div class="footer__footer-content__main-content">
-                    <p>
-                        Интернет-магазин компьютерных игр ГЕЙМСМАРКЕТ - это
-                        онлайн-магазин игр для геймеров, существующий на рынке уже 5 лет.
-                        У нас широкий спектр лицензионных игр на компьютер, ключей для игр - для активации
-                        и авторизации, а также карты оплаты (game-card, time-card, игровые валюты и т.д.),
-                        коды продления и многое друго. Также здесь всегда можно узнать последние новости
-                        из области онлайн-игр для PC. На сайте предоставлены самые востребованные и
-                        актуальные товары MMORPG, приобретение которых здесь максимально удобно и,
-                        что немаловажно, выгодно!
-                    </p>
+                <div class="footer__social-block">
+                    <ul class="social-block__list bcg-social">
+                        <li class="social-block__list__item"><a href="#" class="social-block__list__item__link"><i
+                                        class="fa fa-facebook"></i></a></li>
+                        <li class="social-block__list__item"><a href="#" class="social-block__list__item__link"><i
+                                        class="fa fa-twitter"></i></a></li>
+                        <li class="social-block__list__item"><a href="#" class="social-block__list__item__link"><i
+                                        class="fa fa-instagram"></i></a></li>
+                    </ul>
                 </div>
-            </div>
-            <div class="footer__social-block">
-                <ul class="social-block__list bcg-social">
-                    <li class="social-block__list__item"><a href="#" class="social-block__list__item__link"><i
-                                    class="fa fa-facebook"></i></a></li>
-                    <li class="social-block__list__item"><a href="#" class="social-block__list__item__link"><i
-                                    class="fa fa-twitter"></i></a></li>
-                    <li class="social-block__list__item"><a href="#" class="social-block__list__item__link"><i
-                                    class="fa fa-instagram"></i></a></li>
-                </ul>
-            </div>
-        </footer>
+            </footer>
+        </div>
+
     </main>
 </div>
 </body>

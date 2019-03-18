@@ -18,10 +18,10 @@ class Pagination extends Controller
         ]);
     }
 
-    public function category()
+    public function home()
     {
         $products = Products::paginate(6);
-        return view('action', [
+        return view('home', [
             'products' => $products
         ]);
     }
@@ -29,7 +29,9 @@ class Pagination extends Controller
     public function action($id)
     {
         $category = Category::find($id);
-        $products = Category::paginate(6)->find($id)->prod;
+        $products = Products::query()
+            ->where('products.category_id', '=', $id)
+            ->paginate(2);
         return view('categories.action', [
             'category' => $category,
             'products' => $products
