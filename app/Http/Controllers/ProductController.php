@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Mail\OrderCreate;
 use App\Orders;
 use App\Products;
 use Illuminate\Http\Request;
-use Swift_Mailer;
-use Swift_Message;
-use Swift_SmtpTransport;
+use Illuminate\Support\Facades\Mail;
 
 class ProductController extends Controller
 {
@@ -50,7 +49,7 @@ class ProductController extends Controller
         $file = $request->file('image_name');
         $file->getClientOriginalName();
         $destinationPath = 'uploads';
-        $file->move($destinationPath,$file->getClientOriginalName());
+        $file->move($destinationPath, $file->getClientOriginalName());
 
         $product = new Products();
         $product->name = $request->get('name');
@@ -63,15 +62,6 @@ class ProductController extends Controller
 
         return redirect('/admin/category');
     }
-
-    public function saveToUploads()
-    {
-        if (!empty($_FILES['image']['tmp_name'])) {
-            $fileContent = file_get_contents($_FILES['image']['tmp_name']);
-            file_put_contents('../../resources/uploads/' . $_FILES['image']['name'] . '.jpg', $fileContent);
-        }
-    }
-
 
     public function single($id)
     {
@@ -88,23 +78,7 @@ class ProductController extends Controller
         $order->buyer_email = $request->get('email');
         $order->product_id = $request->get('prod_id');
         $order->save();
-
-        try {
-            $transport = (new Swift_SmtpTransport('smtp.mail.ru', 465, 'ssl'))
-                ->setUsername('achochiyev@mail.ru')
-                ->setPassword('qazwsxedc123');
-            $mailer = new Swift_Mailer($transport);
-            $message = new Swift_Message();
-            $message->setSubject('New order');
-            $message->setFrom(['achochiyev@mail.ru' => 'achochiyev']);
-            $message->setTo('andrew_1024@mail.ru');
-            $message->setBody('Поступил заказ от ' . $request->get('name') . '<br>' .
-            'email пользователя : ' . $request->get('email') . '<br>');
-            $mailer->send($message);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
+        Mail::to('andrew_1024@mail.ru')->send(new OrderCreate(['order' => $order]));
         return redirect('/product/' . $request->get('prod_id'));
     }
-
 }

@@ -282,7 +282,7 @@
                 </svg>
             </a>
             <div                    class="modal-content">
-                <form method="post" class="form" action="/product/save" onsubmit="submitForm(event, this)">
+                <form method="post" class="form" action="/product/save">
                     @csrf
                     <div class="form__title">Укажите ваше имя и телефон, и мы свяжемся с вами в ближайшее время</div>
                     <input type="text" value="" name="name" placeholder="Ваше имя" required="required" />

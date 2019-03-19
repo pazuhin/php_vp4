@@ -6,6 +6,7 @@ use App\Category;
 use \App\Products;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 class Pagination extends Controller
@@ -20,6 +21,9 @@ class Pagination extends Controller
 
     public function home()
     {
+        if (Auth::user()->is_admin == 1) {
+           return redirect('/admin');
+        }
         $products = Products::paginate(6);
         return view('home', [
             'products' => $products
